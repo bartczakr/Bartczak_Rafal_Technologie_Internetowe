@@ -5,10 +5,10 @@ obj/
 .vscode/
 *.user
 
-# Śmieci z Node.js (TO JEST NAJWAŻNIEJSZE)
+# Śmieci z Node.js 
 node_modules/
 
-# Bazy danych (wykładowca powinien mieć czystą)
+# Bazy danych
 *.db
 *.db-shm
 *.db-wal
