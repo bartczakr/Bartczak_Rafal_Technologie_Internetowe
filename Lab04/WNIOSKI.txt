@@ -1,0 +1,17 @@
+WNIOSKI I REALIZACJA ZADANIA (LAB 04)
+
+1. Agregacja danych w SQL
+W przeciwieństwie do poprzednich laboratoriów, gdzie operowaliśmy na prostych zapytaniach CRUD, tutaj kluczowa logika została przeniesiona do warstwy bazy danych.
+Zastosowano zapytanie z klauzulą `LEFT JOIN` oraz `GROUP BY`, aby połączyć tabelę filmów z tabelą ocen.
+Funkcja agregująca `AVG(score)` wylicza średnią ocenę w czasie rzeczywistym, co eliminuje konieczność przechowywania zdenormalizowanej kolumny "średnia" w tabeli filmów i dbania o jej aktualizację.
+
+2. Obsługa przypadków brzegowych (NULL)
+Użycie `LEFT JOIN` powoduje, że filmy bez ocen mają wartość `NULL` w kolumnie średniej. Zastosowano funkcję SQL `COALESCE(AVG(...), 0)`, aby w takich przypadkach zwrócić wartość 0.00, co ułatwia obsługę danych na frontendzie.
+
+3. Walidacja danych
+Zastosowano podwójną walidację ocen:
+- Poziom bazy danych: `CHECK(score >= 1 AND score <= 5)` (w definicji tabeli SQLite).
+- Poziom API: Warunek `if (score < 1 || score > 5)` w kodzie JavaScript, aby zwrócić czytelny błąd HTTP 400 (Bad Request) przed próbą zapisu.
+
+4. Optymalizacja
+Dzięki obliczaniu rankingu bezpośrednio w zapytaniu SQL (`ORDER BY avg_score DESC`), serwer otrzymuje już gotowe, posortowane dane, co zmniejsza obciążenie aplikacji w porównaniu do sortowania tablicy obiektów w pamięci JavaScript.

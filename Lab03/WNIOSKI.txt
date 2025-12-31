@@ -1,0 +1,14 @@
+WNIOSKI I REALIZACJA ZADANIA 
+
+1. Wybór Stacku Technologicznego (Node.js + Express)
+W przeciwieństwie do poprzednich zadań realizowanych w środowisku .NET, w tym laboratorium zdecydowałem się na wykorzystanie Node.js wraz z frameworkiem Express.
+- Uzasadnienie: Wybór ten podyktowany był bezpośrednią sugestią zawartą w opisie zadania, które wskazywało Node.js jako środowisko docelowe dla tego projektu. Chciałem zrealizować zadanie zgodnie z intencją autora wymagań.
+
+2. Framework Express.js
+Zastosowanie biblioteki Express pozwoliło na znaczne uproszczenie kodu obsługującego żądania HTTP (routing). Dzięki temu, zamiast obsługiwać surowe strumienie danych, mogłem skupić się na logice biznesowej (endpointy `/api/posts`, `/api/comments`).
+
+3. Baza danych i Asynchroniczność
+Projekt operuje na bazie SQLite przy użyciu "czystego" SQL (bez ORM). Wymusiło to zmianę podejścia do programowania na asynchroniczne. Zapytania do bazy wykonywane są w tle, a wyniki przetwarzane są w funkcjach zwrotnych, co jest charakterystyczne dla środowiska Node.js.
+
+4. System Moderacji
+Logika biznesowa opiera się na fladze "approved" (wartość 0 lub 1) w tabeli komentarzy. Jest to proste, ale skuteczne zabezpieczenie przed spamem. Frontend publiczny odpytuje tylko o rekordy zatwierdzone, podczas gdy panel administratora ma dostęp do rekordów oczekujących.

@@ -1,0 +1,18 @@
+# Śmieci z C#
+bin/
+obj/
+.idea/
+.vscode/
+*.user
+
+# Śmieci z Node.js (TO JEST NAJWAŻNIEJSZE)
+node_modules/
+
+# Bazy danych (wykładowca powinien mieć czystą)
+*.db
+*.db-shm
+*.db-wal
+
+# Systemowe Mac/Windows
+.DS_Store
+Thumbs.db

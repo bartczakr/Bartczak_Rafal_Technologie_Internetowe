@@ -1,0 +1,14 @@
+WNIOSKI I DECYZJE PROJEKTOWE (LAB 05)
+
+1. Modyfikacja Schematu Bazy Danych
+W dostarczonym przez prowadzącego skrypcie SQL znajdował się indeks unikalny:
+`CREATE UNIQUE INDEX UX_Tasks_Col_Ord ON dbo.Tasks(ColId, Ord);`
+
+W mojej implementacji zdecydowałem się pominąć ten constraint (ograniczenie unikalności) w warstwie bazy danych SQLite.
+
+UZASADNIENIE:
+Wprowadzenie unikalności pary (Kolumna, Pozycja) drastycznie komplikuje logikę przenoszenia zadań. Próba przeniesienia zadania na pozycję, która jest już zajęta (np. pozycja nr 1 w kolumnie "Doing"), spowodowałaby błąd bazy danych. Wymagałoby to implementacji skomplikowanego algorytmu "rozsuwania" pozostałych zadań (przeindeksowania) w ramach jednej transakcji.
+W kontekście zadania laboratoryjnegO, przyjąłem strategię "Append Only" - przenoszone lub nowe zadanie zawsze otrzymuje `Ord = MAX(Ord) + 1`. Gwarantuje to stabilną kolejność bez ryzyka konfliktów i błędów SQL, przy zachowaniu pełnej funkcjonalności użytkowej wymaganej w temacie zadania.
+
+2. Architektura API
+Zastosowałem jeden zbiorczy endpoint `GET /api/board`, który zwraca strukturę `{ cols: [], tasks: [] }`. Pozwala to frontendowi na jednorazowe pobranie całego stanu tablicy i wyrenderowanie go, co redukuje liczbę zapytań HTTP (tzw. over-fetching jest tutaj pomijalny ze względu na małą skalę danych).

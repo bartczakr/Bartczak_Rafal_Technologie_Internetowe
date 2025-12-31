@@ -1,0 +1,119 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\dbmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\dbmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\kanbancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\kanbancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab05\\lab05_bartczak_rafal\\lab05_bartczak_rafal\\lab05_bartczak_rafal.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{BAB34294-B0CB-4B07-A9A4-7D18B6500C82}|Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj|solutionrelative:lab05_bartczak_rafal\\lab05_bartczak_rafal.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-28T23:14:54.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Lab05_Bartczak_Rafal",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-28T23:14:52.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\wwwroot\\index.html",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\wwwroot\\index.html",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAAACcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-12-28T23:14:02.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "KanbanContext.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\KanbanContext.cs",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\KanbanContext.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\KanbanContext.cs",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\KanbanContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T23:12:19.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DbModels.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\DbModels.cs",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\DbModels.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\DbModels.cs",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\DbModels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T23:11:25.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Program.cs",
+              "RelativeDocumentMoniker": "Lab05_Bartczak_Rafal\\Program.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab05\\Lab05_Bartczak_Rafal\\Lab05_Bartczak_Rafal\\Program.cs",
+              "RelativeToolTip": "Lab05_Bartczak_Rafal\\Program.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAADwvwkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T23:11:03.799Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

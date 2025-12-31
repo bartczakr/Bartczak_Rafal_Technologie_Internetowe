@@ -1,0 +1,14 @@
+WNIOSKI I DECYZJE PROJEKTOWE (LAB 06)
+
+1. Implementacja Relacji Many-to-Many
+Wymagany schemat bazy danych zawierał tabelę łączącą "NoteTags". W Entity Framework Core nie ma konieczności tworzenia dedykowanej klasy C# dla tabeli łączącej, jeśli nie zawiera ona dodatkowych kolumn (tzw. payload).
+Zdecydowałem się na wykorzystanie automatycznego mapowania EF Core:
+`modelBuilder.Entity<Note>().HasMany(n => n.Tags).WithMany(t => t.Notes).UsingEntity(j => j.ToTable("NoteTags"));`
+Dzięki temu kod aplikacji operuje na czystych kolekcjach (`note.Tags`), a silnik ORM automatycznie zarządza wpisami w tabeli `NoteTags` w bazie SQLite, zachowując zgodność ze strukturą wymaganą w zadaniu.
+
+2. Wyszukiwanie (LIKE vs FTS)
+Do realizacji wyszukiwania (`q=...`) użyłem metody `.Contains()` w LINQ, która jest tłumaczona przez providera SQLite na instrukcję SQL `LIKE '%...%'`.
+Dla potrzeb prostej aplikacji notatnika jest to rozwiązanie wystarczające i wydajne. Pełne wyszukiwanie tekstowe (FTS5) w SQLite wymagałoby stworzenia wirtualnych tabel i użycia surowego SQL.
+
+3. Logika przypisywania tagów
+Endpoint `POST /api/notes/{id}/tags` realizuje logikę "znajdź lub stwórz". Aplikacja sprawdza każdy przesłany tag - jeśli istnieje w słowniku "Tags", pobiera jego ID. Jeśli nie - tworzy nowy rekord. Zapobiega to duplikacji tagów (np. nie powstaną dwa tagi "praca").

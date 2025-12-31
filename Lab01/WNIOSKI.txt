@@ -1,0 +1,20 @@
+WNIOSKI I UZASADNIENIE WYBORU TECHNOLOGII
+
+1. Wybór środowiska: .NET 8 vs Node.js
+Zdecydowałem się na realizację zadania w języku C# (.NET 8) zamiast sugerowanego Node.js ze względu na silne typowanie. W projektach, gdzie kluczowa jest spójność danych (jak system biblioteczny, relacje wypożyczeń), statyczne typowanie C# pozwala wykryć błędy już na etapie kompilacji, co znacznie przyspiesza development w porównaniu do dynamicznego JavaScriptu.
+
+2. Architektura: Minimal API
+Zamiast tradycyjnych kontrolerów (MVC), zastosowałem podejście Minimal API wprowadzone w nowszych wersjach .NET.
+- Uzasadnienie: Dla mikroserwisu obsługującego kilka endpointów, Minimal API drastycznie redukuje ilość kodu (boilerplate). Cała logika mieści się w jednym pliku, co zwiększa czytelność i ułatwia szybkie wprowadzanie zmian, zachowując przy tym wydajność pełnego ASP.NET Core.
+
+3. Baza danych: SQLite + Entity Framework Core
+Zamiast pełnego serwera SQL (jak w dostarczonym skrypcie SQL), użyłem wbudowanej bazy SQLite w trybie Code-First.
+- Mobilność: Projekt jest w pełni przenośny. Baza to jeden plik, który aplikacja sama tworzy.
+- ORM (Entity Framework): Zamiast pisać surowe zapytania SQL, użyłem ORM. Zapewnia to ochronę przed SQL Injection (parametryzacja zapytań jest automatyczna) i pozwala operować na obiektach, a nie na tabelach.
+
+4. Logika Biznesowa 
+Logikę walidacji dostępności (sprawdzenie czy liczba aktywnych wypożyczeń < liczba kopii) zaimplementowałem w warstwie aplikacji, a nie jako procedurę składowaną w bazie.
+- Dlaczego: Ułatwia to testowanie logiki niezależnie od silnika bazy danych oraz pozwala na łatwiejszą migrację bazy w przyszłości (np. z SQLite na PostgreSQL) bez przepisywania procedur SQL.
+
+5. Frontend (Vanilla JS)
+Zrezygnowałem z ciężkich frameworków (React/Angular) na rzecz czystego HTML/JS (Vanilla). Przy tak prostej strukturze UI, narzut konfiguracyjny frameworka byłby zbędny. Zastosowanie fetch API i prostej manipulacji DOM zapewnia szybkość działania i brak procesu kompilacji frontendu.

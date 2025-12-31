@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Biblioteka Lab01</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #333;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        input, select, button {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            button:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+            .btn-delete:hover {
+                background-color: #c82333;
+            }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .row-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>System Biblioteczny (Lab 01)</h1>
+
+    <div class="box">
+        <h2>1. Książki</h2>
+
+        <div style="background: #e9ecef; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <h3>Wypożycz książkę</h3>
+            <label>Wybierz czytelnika:</label>
+            <select id="memberSelect"></select>
+        </div>
+
+        <h3>Lista książek</h3>
+        <table>
+            <thead><tr><th>ID</th><th>Tytuł</th><th>Autor</th><th>Dostępne / Razem</th><th>Akcja</th></tr></thead>
+            <tbody id="booksTable"></tbody>
+        </table>
+
+        <h3>Dodaj nową książkę</h3>
+        <div class="row-inputs">
+            <input id="title" placeholder="Tytuł">
+            <input id="author" placeholder="Autor">
+            <input id="copies" type="number" value="1" style="width: 60px" placeholder="Ilość">
+            <button onclick="addBook()">Dodaj</button>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2>2. Aktywne Wypożyczenia</h2>
+        <table>
+            <thead><tr><th>Kto</th><th>Co</th><th>Data wypożyczenia</th><th>Status</th><th>Akcja</th></tr></thead>
+            <tbody id="loansTable"></tbody>
+        </table>
+    </div>
+
+    <div class="box">
+        <h2>3. Czytelnicy</h2>
+
+        <h3>Lista czytelników</h3>
+        <table>
+            <thead><tr><th>ID</th><th>Imię i Nazwisko</th><th>Email</th><th>Akcja</th></tr></thead>
+            <tbody id="membersTable"></tbody>
+        </table>
+
+        <h3>Dodaj nowego czytelnika</h3>
+        <div class="row-inputs">
+            <input id="memName" placeholder="Imię i Nazwisko">
+            <input id="memEmail" placeholder="Email">
+            <button onclick="addMember()">Dodaj</button>
+        </div>
+        <span id="memError" class="error"></span>
+    </div>
+
+    <script>
+        const API = '/api';
+
+        async function loadData() {
+            // czytelnicy
+            const memRes = await fetch(`${API}/members`);
+            const members = await memRes.json();
+
+            // lista w tabelce
+            const memTable = document.getElementById('membersTable');
+            memTable.innerHTML = members.map(m => `
+                    <tr>
+                        <td>${m.id}</td>
+                        <td>${m.name}</td>
+                        <td>${m.email}</td>
+                        <td><button class="btn-delete" onclick="deleteMember(${m.id})">Usuń</button></td>
+                    </tr>
+                `).join('');
+
+            // select wypozyczneie
+            const select = document.getElementById('memberSelect');
+            const currentVal = select.value;
+            select.innerHTML = members.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+            if (currentVal) select.value = currentVal;
+
+            // ksiazki
+            const bookRes = await fetch(`${API}/books`);
+            const books = await bookRes.json();
+            document.getElementById('booksTable').innerHTML = books.map(b => `
+                    <tr>
+                        <td>${b.id}</td>
+                        <td>${b.title}</td>
+                        <td>${b.author}</td>
+                        <td><b>${b.available}</b> / ${b.copies}</td>
+                        <td>
+                            <button onclick="borrow(${b.id})" ${b.available === 0 ? 'disabled' : ''}>
+                                ${b.available > 0 ? 'Wypożycz' : 'Brak sztuk'}
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            // wypozyczenia
+            const loanRes = await fetch(`${API}/loans`);
+            const loans = await loanRes.json();
+            document.getElementById('loansTable').innerHTML = loans.map(l => `
+                    <tr>
+                        <td>${l.memberName}</td>
+                        <td>${l.bookTitle}</td>
+                        <td>${l.loanDate.split('T')[0]}</td>
+                        <td>${l.returnDate ? '✅ Zwrócono: ' + l.returnDate.split('T')[0] : '⏳ W toku'}</td>
+                        <td>
+                            ${!l.returnDate ? `<button onclick="returnBook(${l.id})">Zwróć</button>` : '-'}
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        async function deleteMember(id) {
+            if (!confirm("Na pewno usunąć tego czytelnika?")) return;
+
+            const res = await fetch(`${API}/members/${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                loadData();
+            } else {
+                alert("Nie można usunąć (może ma aktywne wypożyczenia?)");
+            }
+        }
+
+        async function borrow(bookId) {
+            const memberId = document.getElementById('memberSelect').value;
+            if (!memberId) return alert("Najpierw dodaj/wybierz czytelnika!");
+
+            const res = await fetch(`${API}/loans/borrow`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ memberId: parseInt(memberId), bookId: bookId })
+            });
+
+            if (res.status === 409) alert("Błąd: Brak dostępnych egzemplarzy!");
+            else loadData();
+        }
+
+        async function returnBook(loanId) {
+            await fetch(`${API}/loans/return?loanId=${loanId}`, { method: 'POST' });
+            loadData();
+        }
+
+        async function addMember() {
+            const name = document.getElementById('memName').value;
+            const email = document.getElementById('memEmail').value;
+            if (!name || !email) return alert("Podaj imię i email!");
+
+            const res = await fetch(`${API}/members`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email })
+            });
+
+            if (res.status === 409) document.getElementById('memError').innerText = "Email zajęty!";
+            else {
+                document.getElementById('memError').innerText = "";
+                document.getElementById('memName').value = "";
+                document.getElementById('memEmail').value = "";
+                loadData();
+            }
+        }
+
+        async function addBook() {
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const copies = document.getElementById('copies').value;
+            if (!title || !author) return alert("Podaj tytuł i autora!");
+
+            await fetch(`${API}/books`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, author, copies: parseInt(copies) })
+            });
+            document.getElementById('title').value = "";
+            document.getElementById('author').value = "";
+            loadData();
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

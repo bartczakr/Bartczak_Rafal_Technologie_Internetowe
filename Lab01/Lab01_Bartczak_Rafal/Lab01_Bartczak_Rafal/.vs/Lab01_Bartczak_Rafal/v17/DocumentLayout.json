@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|solutionrelative:lab01_bartczak_rafal\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\dbmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|solutionrelative:lab01_bartczak_rafal\\dbmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\librarycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|solutionrelative:lab01_bartczak_rafal\\librarycontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|c:\\users\\rafal\\desktop\\tecnologie sieciowe 27.12 rtobimy\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\lab01_bartczak_rafal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FDEA333D-E9BF-4306-9537-53CFBB43D658}|Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal.csproj|solutionrelative:lab01_bartczak_rafal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:598739505:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "Lab01_Bartczak_Rafal\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\wwwroot\\index.html",
+              "RelativeToolTip": "Lab01_Bartczak_Rafal\\wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-12-27T23:08:34.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LibraryContext.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\LibraryContext.cs",
+              "RelativeDocumentMoniker": "Lab01_Bartczak_Rafal\\LibraryContext.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\LibraryContext.cs",
+              "RelativeToolTip": "Lab01_Bartczak_Rafal\\LibraryContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-27T23:06:38.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DbModels.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\DbModels.cs",
+              "RelativeDocumentMoniker": "Lab01_Bartczak_Rafal\\DbModels.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\DbModels.cs",
+              "RelativeToolTip": "Lab01_Bartczak_Rafal\\DbModels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-27T23:06:00.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Program.cs",
+              "RelativeDocumentMoniker": "Lab01_Bartczak_Rafal\\Program.cs",
+              "ToolTip": "C:\\Users\\rafal\\Desktop\\tecnologie sieciowe 27.12 rtobimy\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Lab01_Bartczak_Rafal\\Program.cs",
+              "RelativeToolTip": "Lab01_Bartczak_Rafal\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAADwv00AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-27T22:58:28.551Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

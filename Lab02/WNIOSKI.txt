@@ -1,0 +1,17 @@
+WNIOSKI I UZASADNIENIE REALIZACJI 
+
+1. Kontynuacja Stacku Technologicznego
+Podobnie jak w zadaniu pierwszym, projekt został zrealizowany w .NET 8 przy użyciu Minimal API oraz bazy SQLite z Entity Framework Core. Pozwoliło to na zachowanie spójności architektury, silnego typowania (C#) oraz łatwej przenośności projektu (brak konieczności instalacji serwera SQL).
+
+2. Implementacja Koszyka
+W przeciwieństwie do rozwiązań opartych na sesji w przeglądarce (LocalStorage/Cookies), zdecydowałem się na przechowywanie koszyka w bazie danych (tabela "CartItems").
+- Zaleta: Koszyk jest trwały i przypisany do serwera. Pozwala to na łatwe zarządzanie stanami magazynowymi w przyszłości oraz analizę "porzuconych koszyków".
+- Dostępność: Koszyk jest dostępny z poziomu API (`GET /api/cart`), co ułatwia testowanie backendu niezależnie od interfejsu użytkownika.
+
+3. Logika "Snapshotu Ceny" 
+Zgodnie z wymaganiami, zaimplementowałem mechanizm kopiowania ceny w momencie zakupu.
+- Problem: Zmiana ceny produktu w tabeli "Products" nie może wpływać na wartość historycznych zamówień.
+- Rozwiązanie: W tabeli "OrderItems" utworzono kolumnę "Price". Podczas finalizacji zamówienia (`POST /api/checkout`), system pobiera aktualną cenę produktu i zapisuje ją "na sztywno" w pozycji zamówienia. Dzięki temu zamówienie stanowi niezmienny dokument historyczny.
+
+4. Transakcyjność
+Proces przenoszenia danych z koszyka do zamówienia został objęty transakcją bazodanową ("db.Database.BeginTransactionAsync"). Gwarantuje to spójność danych - jeśli wystąpi błąd podczas zapisu pozycji zamówienia, cała operacja zostanie cofnięta, a koszyk nie zostanie wyczyszczony, co zapobiega utracie danych przez użytkownika.

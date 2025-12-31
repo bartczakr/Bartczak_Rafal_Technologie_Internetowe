@@ -1,0 +1,6 @@
+@Lab05_Bartczak_Rafal_HostAddress = http://localhost:5265
+
+GET {{Lab05_Bartczak_Rafal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

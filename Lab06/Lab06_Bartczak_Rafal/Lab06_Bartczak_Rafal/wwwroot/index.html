@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Notatki Lab06</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fdfdfd;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+            #search-input:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+
+        .note-card {
+            background: white;
+            border: 1px solid #e1e1e1;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .note-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .note-date {
+            color: #95a5a6;
+            font-size: 0.85em;
+        }
+
+        .note-body {
+            line-height: 1.6;
+            color: #555;
+            white-space: pre-wrap;
+        }
+
+        .tags {
+            margin-top: 15px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e0f7fa;
+            color: #006064;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            cursor: pointer;
+        }
+
+            .tag:hover {
+                background: #b2ebf2;
+            }
+
+        .add-form {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .form-row {
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+            button:hover {
+                background: #2ecc71;
+            }
+    </style>
+</head>
+<body>
+    <h1>Moje Notatki</h1>
+
+    <div class="search-box">
+        <input id="search-input" placeholder="🔍 Szukaj po tytule lub treści..." oninput="search()">
+    </div>
+
+    <div id="notes-list"></div>
+
+    <div class="add-form">
+        <h3>Dodaj nową notatkę</h3>
+        <div class="form-row"><input id="new-title" placeholder="Tytuł"></div>
+        <div class="form-row"><textarea id="new-body" rows="3" placeholder="Treść notatki"></textarea></div>
+        <div class="form-row"><input id="new-tags" placeholder="Tagi (oddzielone przecinkiem, np. praca, dom)"></div>
+        <button onclick="addNote()">Zapisz notatkę</button>
+    </div>
+
+    <script>
+        const API = '/api';
+
+        async function search() {
+            const q = document.getElementById('search-input').value;
+            const res = await fetch(`${API}/notes?q=${encodeURIComponent(q)}`);
+            const notes = await res.json();
+            renderNotes(notes);
+        }
+
+        function renderNotes(notes) {
+            const container = document.getElementById('notes-list');
+            if(notes.length === 0) {
+                container.innerHTML = "<p style='color:#777; text-align:center'>Brak wyników.</p>";
+                return;
+            }
+
+            container.innerHTML = notes.map(n => `
+                <div class="note-card">
+                    <div class="note-header">
+                        <h2 class="note-title">${highlight(n.title)}</h2>
+                        <span class="note-date">${new Date(n.createdAt).toLocaleString()}</span>
+                    </div>
+                    <div class="note-body">${highlight(n.body)}</div>
+                    <div class="tags">
+                        ${n.tags.map(t => `<span class="tag" onclick="filterTag('${t.name}')">#${t.name}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function highlight(text) {
+            const q = document.getElementById('search-input').value;
+            if(!q) return text;
+            const re = new RegExp(`(${q})`, 'gi');
+            return text.replace(re, '<mark style="background:#fff176">$1</mark>');
+        }
+
+        function filterTag(tagName) {
+            document.getElementById('search-input').value = tagName;
+            search();
+        }
+
+        async function addNote() {
+            const title = document.getElementById('new-title').value;
+            const body = document.getElementById('new-body').value;
+            const tagsStr = document.getElementById('new-tags').value;
+
+            if(!title || !body) return alert("Wpisz tytuł i treść!");
+
+            const res = await fetch(`${API}/notes`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ title, body })
+            });
+            const newNote = await res.json();
+
+            if(tagsStr) {
+                const tagsArray = tagsStr.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+                await fetch(`${API}/notes/${newNote.id}/tags`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ tags: tagsArray })
+                });
+            }
+
+            document.getElementById('new-title').value = "";
+            document.getElementById('new-body').value = "";
+            document.getElementById('new-tags').value = "";
+            search(); 
+        }
+
+        search();
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Sklep Lab02</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-del {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-checkout {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .history-details {
+            font-size: 0.85em;
+            color: #666;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sklep Lab02</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Produkty</h2>
+            <table>
+                <thead><tr><th>Nazwa</th><th>Cena</th><th>Akcja</th></tr></thead>
+                <tbody id="productsTable"></tbody>
+            </table>
+            <h3>Dodaj produkt</h3>
+            <input id="newProdName" placeholder="Nazwa">
+            <input id="newProdPrice" type="number" placeholder="Cena">
+            <button class="btn-add" onclick="addProduct()">Dodaj</button>
+        </div>
+        <div class="column">
+            <h2>Koszyk</h2>
+            <table>
+                <thead><tr><th>Produkt</th><th>Ilość</th><th>Cena</th><th>X</th></tr></thead>
+                <tbody id="cartTable"></tbody>
+            </table>
+            <div style="text-align: right; font-weight: bold; margin-top: 10px;">Suma: <span id="cartTotal">0</span> PLN</div>
+            <button class="btn-checkout" onclick="checkout()">ZAMÓW</button>
+        </div>
+    </div>
+    <div class="column" style="margin-top: 20px;">
+        <h2>Historia Zamówień</h2>
+        <div id="ordersHistory"></div>
+    </div>
+    <script>
+        const API = '/api';
+        async function loadData() {
+            const pRes = await fetch(`${API}/products`);
+            const prods = await pRes.json();
+            document.getElementById('productsTable').innerHTML = prods.map(p => `
+                <tr><td>${p.name}</td><td class="price">${p.price.toFixed(2)} zł</td>
+                <td><button class="btn-add" onclick="addToCart(${p.id})">+</button></td></tr>`).join('');
+
+            const cRes = await fetch(`${API}/cart`);
+            const cart = await cRes.json();
+            document.getElementById('cartTotal').innerText = cart.total.toFixed(2);
+            document.getElementById('cartTable').innerHTML = cart.items.map(i => `
+                <tr><td>${i.product?.name}</td>
+                <td><input type="number" min="1" value="${i.qty}" onchange="updateQty(${i.productId}, this.value)" style="width:40px"></td>
+                <td>${((i.product?.price||0)*i.qty).toFixed(2)}</td>
+                <td><button class="btn-del" onclick="delItem(${i.productId})">X</button></td></tr>`).join('');
+
+            const oRes = await fetch(`${API}/orders`);
+            const orders = await oRes.json();
+            document.getElementById('ordersHistory').innerHTML = orders.map(o => `
+                <div class="history-item"><strong>#${o.id} (${new Date(o.createdAt).toLocaleString()})</strong> - Total: <span class="price">${o.total.toFixed(2)} zł</span>
+                <div class="history-details">${o.items.map(i => `${i.productName} (${i.qty}x ${i.price.toFixed(2)})`).join(', ')}</div></div>`).join('');
+        }
+        async function addToCart(id) { await fetch(`${API}/cart/add`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({productId:id, qty:1}) }); loadData(); }
+        async function updateQty(id, q) { await fetch(`${API}/cart/item`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({productId:id, qty:parseInt(q)}) }); loadData(); }
+        async function delItem(id) { await fetch(`${API}/cart/item/${id}`, { method:'DELETE' }); loadData(); }
+        async function checkout() { if(confirm("Kupić?")) { await fetch(`${API}/checkout`, { method:'POST' }); loadData(); } }
+        async function addProduct() {
+            const name = document.getElementById('newProdName').value;
+            const price = document.getElementById('newProdPrice').value;
+            if(name && price) await fetch(`${API}/products`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name, price:parseFloat(price)}) });
+            loadData();
+        }
+        loadData();
+    </script>
+</body>
+</html>

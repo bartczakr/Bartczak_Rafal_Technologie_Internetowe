@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Kanban</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f5f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #172b4d;
+        }
+
+        .board {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            overflow-x: auto;
+            min-height: 80vh;
+        }
+
+        .column {
+            background: #ebecf0;
+            min-width: 280px;
+            width: 300px;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col-header {
+            font-weight: bold;
+            padding: 10px 5px;
+            color: #172b4d;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-list {
+            flex: 1;
+            min-height: 50px;
+        }
+
+        .task-card {
+            background: white;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .task-card:hover {
+                background-color: #f4f5f7;
+            }
+
+        .controls button {
+            background: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            padding: 2px 6px;
+        }
+
+            .controls button:hover {
+                background: #ddd;
+            }
+
+        .add-form {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+            .add-form input {
+                flex: 1;
+                padding: 5px;
+                border: 1px solid #dfe1e6;
+                border-radius: 4px;
+            }
+
+        .btn-add {
+            background: #0052cc;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .btn-add:hover {
+                background: #0047b3;
+            }
+    </style>
+</head>
+<body>
+    <h1>Tablica Kanban</h1>
+    <div id="board" class="board">Ładowanie...</div>
+
+    <script>
+        const API = '/api';
+        let globalCols = [];
+
+        async function loadBoard() {
+            const res = await fetch(`${API}/board`);
+            const data = await res.json();
+            globalCols = data.cols;
+            renderBoard(data.cols, data.tasks);
+        }
+
+        function renderBoard(cols, tasks) {
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+
+            cols.forEach((col, index) => {
+                const colTasks = tasks.filter(t => t.colId === col.id);
+                const colDiv = document.createElement('div');
+                colDiv.className = 'column';
+                colDiv.innerHTML = `
+                        <div class="col-header">
+                            ${col.name} <span style="color:#666">${colTasks.length}</span>
+                        </div>
+                        <div class="task-list" id="col-${col.id}">
+                            ${colTasks.map(t => `
+                                <div class="task-card">
+                                    <span>${t.title}</span>
+                                    <div class="controls">
+                                        ${index > 0 ? `<button onclick="moveTask(${t.id}, ${cols[index - 1].id})">◀</button>` : ''}
+                                        ${index < cols.length - 1 ? `<button onclick="moveTask(${t.id}, ${cols[index + 1].id})">▶</button>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="add-form">
+                            <input id="input-${col.id}" placeholder="+ Dodaj zadanie">
+                            <button class="btn-add" onclick="addTask(${col.id})">Dodaj</button>
+                        </div>
+                    `;
+                board.appendChild(colDiv);
+            });
+        }
+
+        async function addTask(colId) {
+            const input = document.getElementById(`input-${colId}`);
+            const title = input.value;
+            if (!title) return;
+
+            await fetch(`${API}/tasks`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, colId })
+            });
+            input.value = '';
+            loadBoard();
+        }
+
+        async function moveTask(taskId, targetColId) {
+            await fetch(`${API}/tasks/${taskId}/move`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ colId: targetColId })
+            });
+            loadBoard();
+        }
+
+        loadBoard();
+    </script>
+</body>
+</html>

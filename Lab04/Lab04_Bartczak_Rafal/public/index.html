@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking Filmów Lab04</title>
+    <style>
+        body { font-family: sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #1a1a1a; color: #eee; }
+        .card { background: #2d2d2d; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        h1, h2 { color: #f5c518; } 
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; border-bottom: 2px solid #444; padding: 10px; color: #888; }
+        td { padding: 15px 10px; border-bottom: 1px solid #444; }
+        
+        .score-badge { 
+            background: #333; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 1.1em;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .score-high { color: #4ade80; } 
+        .score-mid { color: #facc15; }
+        .score-low { color: #f87171; }  
+
+        input, button, select { padding: 10px; border-radius: 4px; border: none; margin: 5px 0; }
+        input { background: #444; color: white; border: 1px solid #555; }
+        button { background: #f5c518; color: black; font-weight: bold; cursor: pointer; }
+        button:hover { background: #e2b616; }
+
+        .filters { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+        .rating-form { display: flex; gap: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🎬 Ranking Filmów</h1>
+
+    <div class="card">
+        <div class="filters">
+            <label>Filtruj rok:</label>
+            <input id="filter-year" type="number" placeholder="np. 2010" style="width: 100px;">
+            <button onclick="loadMovies()">Szukaj</button>
+            <button onclick="document.getElementById('filter-year').value=''; loadMovies()">Pokaż wszystkie</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Top Filmy</h2>
+        <table>
+            <thead><tr><th>#</th><th>Tytuł</th><th>Rok</th><th>Średnia</th><th>Głosy</th><th>Twoja Ocena</th></tr></thead>
+            <tbody id="movies-list"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Dodaj nowy film</h2>
+        <div style="display:flex; gap:10px;">
+            <input id="new-title" placeholder="Tytuł filmu" style="flex:1">
+            <input id="new-year" type="number" placeholder="Rok" style="width: 100px;">
+            <button onclick="addMovie()">Dodaj do bazy</button>
+        </div>
+    </div>
+
+    <script>
+        const API = '/api';
+
+        async function loadMovies() {
+            const year = document.getElementById('filter-year').value;
+            let url = `${API}/movies`;
+            if(year) url += `?year=${year}`;
+
+            const res = await fetch(url);
+            const movies = await res.json();
+            
+            const list = document.getElementById('movies-list');
+            list.innerHTML = movies.map((m, index) => {
+                let colorClass = 'score-mid';
+                if(m.avg_score >= 4.0) colorClass = 'score-high';
+                if(m.avg_score < 3.0 && m.avg_score > 0) colorClass = 'score-low';
+
+                return `
+                <tr>
+                    <td style="color:#666; font-size:0.9em">${index + 1}</td>
+                    <td style="font-weight:bold; font-size:1.1em">${m.title}</td>
+                    <td style="color:#aaa">${m.year}</td>
+                    <td>
+                        <span class="score-badge ${colorClass}">
+                            ★ ${m.avg_score.toFixed(2)}
+                        </span>
+                    </td>
+                    <td style="color:#aaa">${m.votes} głosów</td>
+                    <td>
+                        <div class="rating-form">
+                            <select id="score-${m.id}">
+                                <option value="5">5 - Arcydzieło</option>
+                                <option value="4">4 - Dobry</option>
+                                <option value="3">3 - Średni</option>
+                                <option value="2">2 - Słaby</option>
+                                <option value="1">1 - Dno</option>
+                            </select>
+                            <button onclick="rateMovie(${m.id})">Głosuj</button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        async function rateMovie(id) {
+            const score = document.getElementById(`score-${id}`).value;
+            const res = await fetch(`${API}/ratings`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ movie_id: id, score: parseInt(score) })
+            });
+            
+            if(res.ok) {
+                loadMovies();
+            } else {
+                alert("Błąd podczas głosowania!");
+            }
+        }
+
+        async function addMovie() {
+            const title = document.getElementById('new-title').value;
+            const year = document.getElementById('new-year').value;
+            if(!title || !year) return alert("Uzupełnij dane!");
+
+            await fetch(`${API}/movies`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ title, year })
+            });
+            
+            document.getElementById('new-title').value = "";
+            document.getElementById('new-year').value = "";
+            loadMovies();
+        }
+
+        loadMovies();
+    </script>
+</body>
+</html>
